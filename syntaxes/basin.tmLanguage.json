@@ -1,0 +1,249 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Basin",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#string_format"
+		},
+		{
+			"include": "#strings1"
+		},
+        {
+			"include": "#big_string"
+		},
+		{
+			"include": "#commentline"
+		},
+        {
+			"include": "#binbash"
+		},
+		{
+			"include": "#commentblock"	
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#preproc"
+		},
+		{
+			"include": "#annotation"
+		},
+		{
+			"include": "#types"
+		},
+        {
+            "include": "#assembly"
+        },
+        {
+            "include": "#func_assembly"
+        },
+        {
+            "include": "#shebang"
+        }
+	],
+	"repository": {
+        "binbash": {
+			"name":"comment.line",
+			"begin":"^(?<!\n)#!/",
+			"end":"\n"
+		},
+		"commentline": {
+			"name":"comment.line",
+			"begin":"//",
+			"end":"\n",
+            "patterns": [
+                {
+					"name": "keyword.other",
+					"match": "TODO:|NOTE:"
+	            },
+				{
+					"name": "keyword.control",
+					"match": "@param\\s+(\\w|_|\\d)+"
+	            },
+				{
+					"name": "keyword.control",
+					"match": "@return"
+	            }
+			]
+		},
+		"commentblock": {
+			"name":"comment.block",
+			"begin":"/\\*",
+			"end":"\\*/",
+            "patterns": [
+                {
+                    "name": "keyword.other",
+                    "match": "TODO:|NOTE:"
+                },
+				{
+					"name": "keyword.control",
+					"match": "@param\\s+(\\w|_|\\d)+"
+	            },
+				{
+					"name": "keyword.control",
+					"match": "@return"
+	            }
+            ]
+		},
+        "func_assembly": {
+            "name": "support.function",
+            "begin": "(?<=@asm.*\\{)",
+            "end": "\\}",
+            "patterns": [
+                {
+                    "name": "keyword.control",
+                    "match": "^\\s*\\w+"
+                },
+                {
+                    "name": "comment.line",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.block",
+                    "match": "/\\*(.|\\n)*\\*//"
+                }
+            ]
+        },
+        "assembly": {
+            "name": "support.function",
+            "begin": "(?<=asm\\s*(<.*>)?(\\(.*\\))?\\s*\\{)",
+            "end": "\\}",
+            "patterns": [
+                {
+                    "name": "keyword.control",
+                    "match": "^\\s*\\w+"
+                },
+                {
+                    "name": "comment.line",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.block",
+                    "match": "/\\*(.|\\n)*\\*//"
+                }
+            ]
+        },
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control",
+				"match": "\\b(if|else|while|switch|case|for|break|yield|continue|global|constant|fn|enum|struct|return|defer|operator|asm|as)\\b"
+			},
+            {
+                "name": "keyword.other",
+                "match": "TODO:|NOTE:"
+            }
+			]
+		},
+		"preproc":{
+			"patterns": [
+                {
+                    "name":"entity.name.function",
+                    "match":"(?<=#macro)\\s*\\w+"
+                },
+                {
+                    "name":"entity.name.selector",
+                    "match":"#\\w+"
+                }
+            ]
+		},
+		"shebang":{
+			"patterns": [
+                {
+                    "name":"entity.name.tag",
+                    "match":"^#\\!.*$"
+                }
+            ]
+		},
+		"annotation": {
+			"patterns": [
+				{
+					"name": "entity.name.tag",
+					"match": "@\\S+"
+				}
+			]
+		},
+		"functions":{
+			"patterns": [{
+				"name":"entity.name.function",
+				"match": "\\w+\\("
+			}]
+		},
+		"types":{
+			"patterns": [{
+				"name":"entity.name.type",
+				"match": "((?<=\\w+\\s*:\\s*)|(?<=-\\>\\s*))(?<base>(\\w+::)*(\\w+)(\\<(\\g'base')(,\\g'base')*\\>)?(\\*)*)"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.basin",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.basin",
+					"match": "\\\\."
+				}
+			]
+		},
+		"string_format": {
+			"name": "string.quoted.double.basin",
+			"begin": "f\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.basin",
+					"match": "\\\\."
+				},
+				{
+					"name": "source.bsn",
+					"match": "\\{[^}]*\\}"
+				}
+			]
+		},
+		"strings1": {
+			"patterns": [
+				{
+					"name": "string.quoted.single.basin",
+					"match": "'((.)|(\\\\.))'"
+				}
+			]
+		},
+        "big_string": {
+			"name": "string.quoted.double",
+			"begin": "@strbeg",
+			"end": "@strend"
+		},
+		"operators":{
+			"name":"keyword.operator",
+			"patterns": [
+				{
+					"name": "keyword.operator",
+					"match":"(\\=\\=)|(\\=)|(\\+)|(\\-)|(\\*)|(\\/)|(\\%)|(\\<)|(\\>)|(\\!\\=)|(\\|)|(\\&)|(\\^)"
+				}
+			]
+		},
+		"numbers": {
+			"name": "constant.numeric",
+			"patterns": [
+				{
+					"name": "constant.numeric",
+					"match": "\\b\\d+(\\.\\d+)?d?u?s?\\b|\\b0x[0-9A-F_]+\\b|\\b(false|true|null)\\b"
+				}
+			]
+		}
+	},
+	"scopeName": "source.bsn"
+}

@@ -1,0 +1,5 @@
+bin
+
+*.vsix
+*.code-workspace
+.vscode/settings.json

@@ -1,0 +1,33 @@
+{
+  "name": "basin",
+  "displayName": "Basin Language",
+  "author": "Emarioo",
+  "publisher": "Emarioo",
+  "description": "Syntax highlight for Basin language",
+  "icon": "img/icon.png",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "basin",
+      "aliases": ["Basin Language", "basin"],
+      "extensions": [".bsn"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "basin",
+      "scopeName": "source.bsn",
+      "path": "./syntaxes/basin.tmLanguage.json"
+    }]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Emarioo/basin-vscode-extension"
+  },
+  "homepage": "https://github.com/Emarioo/basin-vscode-extension/tree/main"
+}
