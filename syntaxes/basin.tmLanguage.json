@@ -139,7 +139,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control",
-				"match": "\\b(if|else|while|switch|case|for|break|yield|continue|global|constant|fn|enum|struct|return|defer|operator|asm|as)\\b"
+				"match": "\\b(if|else|while|switch|case|for|break|yield|default|continue|global|constant|fn|enum|struct|return|defer|operator|asm|as)\\b"
 			},
             {
                 "name": "keyword.other",
